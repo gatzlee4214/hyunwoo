@@ -459,8 +459,19 @@ section {
   font-size: 1.5rem;
   color: var(--color-text-muted);
   border-bottom: 1px solid rgba(255,255,255,0.05);
+  border-radius: 20px 20px 0 0;
   font-weight: 600;
   letter-spacing: 1px;
+}
+
+.project-img-placeholder.blog-bg {
+  background: url('./images/space_blog.png') no-repeat center center;
+  background-size: cover;
+}
+
+.project-img-placeholder.c-bg {
+  background: url('./images/c_grade.png') no-repeat center center;
+  background-size: cover;
 }
 
 .project-content {
