@@ -230,6 +230,7 @@ section {
   margin-bottom: 1rem;
   background: linear-gradient(to right, #ffffff, #00d2ff, #7a00ff);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: textShimmer 3s infinite linear;
   background-size: 200% auto;
@@ -393,6 +394,7 @@ section {
   margin-bottom: 1.2rem;
   background: linear-gradient(90deg, #fff, #b9b6ff);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
