@@ -288,14 +288,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
-  function openSkillModal(skillKey) {
-    if (!skillRecordsData[skillKey]) return;
+  const projectRecordsData = {
+    blog: {
+      icon: '🌌',
+      title: '우주 테마 개발 블로그',
+      records: [
+        { date: '2026. 03. 31', title: '프로젝트 개요', desc: '나만의 개성을 담은 포트폴리오 사이트 제작. Glassmorphism과 우주 배경 파티클로 프리미엄 느낌 강조.' },
+        { date: '주요 기술', title: 'Vanilla JS & Canvas', desc: '프레임워크 없이 순수 자바스크립트와 Canvas API를 이용해 배경 애니메이션 직접 구현.' }
+      ]
+    },
+    grade: {
+      icon: '🖥️',
+      title: '학생 성적 관리 프로그램',
+      records: [
+        { date: '2026. 03. 15', title: '구조체 설계', desc: '이름, 학번, 성적 정보를 담는 Student 구조체 설계 및 동적 할당 관리.' },
+        { date: '기능 설명', title: '데이터 정렬 및 검색', desc: '성적순 정렬 기능과 특정 학생 검색 기능을 CLI 환경에서 구현.' }
+      ]
+    }
+  };
+
+  function openSkillModal(key, type = 'skill') {
+    const dataSource = type === 'skill' ? skillRecordsData : projectRecordsData;
+    if (!dataSource[key]) return;
     
-    const data = skillRecordsData[skillKey];
+    const data = dataSource[key];
     modalIcon.textContent = data.icon;
     modalTitle.textContent = data.title;
     
-    modalBody.innerHTML = ''; // clear
+    modalBody.innerHTML = ''; 
     
     if (data.records.length === 0) {
       modalBody.innerHTML = '<p style="color: var(--color-text-muted); text-align: center;">아직 등록된 기록이 없습니다.</p>';
@@ -314,22 +334,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (skillModal) {
       skillModal.classList.add('show');
-      document.body.style.overflow = 'hidden'; // prevent bg scroll
+      document.body.style.overflow = 'hidden'; 
     }
   }
 
-  function closeSkillModal() {
-    if (skillModal) {
-      skillModal.classList.remove('show');
-      document.body.style.overflow = ''; // restore bg scroll
-    }
-  }
+  const projectCards = document.querySelectorAll('.project-card');
 
   if (skillCards) {
     skillCards.forEach(card => {
       card.addEventListener('click', () => {
         const skill = card.getAttribute('data-skill');
-        if (skill) openSkillModal(skill);
+        if (skill) openSkillModal(skill, 'skill');
+      });
+    });
+  }
+
+  if (projectCards) {
+    projectCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const project = card.getAttribute('data-project');
+        if (project) openSkillModal(project, 'project');
       });
     });
   }
