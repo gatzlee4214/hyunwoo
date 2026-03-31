@@ -23,7 +23,10 @@
       <div class="logo">Hyunwoo.Dev<span>_</span></div>
       <ul class="nav-links">
         <li><a href="#about" class="active">About</a></li>
-        <li><a href="#records">Study Records</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#records">Records</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#guestbook">Memo Board</a></li>
         <li><a href="#github">GitHub</a></li>
       </ul>
     </nav>
@@ -44,6 +47,46 @@
         <div class="cta-buttons">
           <a href="#records" class="btn primary">View Records</a>
           <a href="#github" class="btn secondary">Visit GitHub</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tech Stack / Skills Section -->
+    <section id="skills" class="skills slide-up">
+      <div class="section-title">
+        <h2>Tech Stack</h2>
+        <p>제가 공부하고 다룰 수 있는 기술들입니다.</p>
+      </div>
+      <div class="skills-grid">
+        <div class="skill-card glass-panel interactive" data-skill="c">
+          <div class="skill-icon">C</div>
+          <h3>C Language</h3>
+          <p>포인터와 동적 할당, 시스템 기초 프로그래밍</p>
+        </div>
+        <div class="skill-card glass-panel interactive" data-skill="linux">
+          <div class="skill-icon">🐧</div>
+          <h3>Linux</h3>
+          <p>쉘 명령어, 리눅스 서버 유지보수 및 활용</p>
+        </div>
+        <div class="skill-card glass-panel interactive" data-skill="html">
+          <div class="skill-icon">🌐</div>
+          <h3>HTML/CSS</h3>
+          <p>반응형 웹, 접근성, 웹디자인(유리 텍스처 등)</p>
+        </div>
+        <div class="skill-card glass-panel interactive" data-skill="js">
+          <div class="skill-icon">JS</div>
+          <h3>JavaScript</h3>
+          <p>인터랙티브한 웹, DOM 조작 및 이벤트 처리</p>
+        </div>
+        <div class="skill-card glass-panel interactive" data-skill="git">
+          <div class="skill-icon">⌨️</div>
+          <h3>Git/GitHub</h3>
+          <p>버전 관리 및 오픈소스 협업 기초</p>
+        </div>
+        <div class="skill-card glass-panel interactive" data-skill="more">
+          <div class="skill-icon">🚀</div>
+          <h3>...and more</h3>
+          <p>앞으로 추가될 수많은 기술과 언어들!</p>
         </div>
       </div>
     </section>
@@ -91,6 +134,62 @@
       </div>
     </section>
 
+    <!-- Toy Projects Section -->
+    <section id="projects" class="projects slide-up">
+      <div class="section-title">
+        <h2>Toy Projects</h2>
+        <p>수업 실습 및 개인적으로 진행한 미니 프로젝트</p>
+      </div>
+      <div class="projects-grid">
+        <article class="project-card glass-panel interactive">
+          <div class="project-img-placeholder">
+             <span>🌌 Personal Blog</span>
+          </div>
+          <div class="project-content">
+            <h3>우주 테마 개발 블로그</h3>
+            <p>Glassmorphism 디자인 기법과 Vanilla JS, Canvas API를 활용하여 만든 나만의 웹사이트입니다.</p>
+            <div class="tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JS</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card glass-panel interactive">
+          <div class="project-img-placeholder">
+             <span>🖥️ C Grade Manager</span>
+          </div>
+          <div class="project-content">
+            <h3>학생 성적 관리 프로그램</h3>
+            <p>C언어 구조체와 동적 할당을 사용해 구현한 콘솔 기반 성적 데이터 입출력 및 정렬 장난감 프로젝트입니다.</p>
+            <div class="tags">
+              <span class="tag">C</span>
+              <span class="tag">CLI</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Guestbook / Memo Board Section -->
+    <section id="guestbook" class="guestbook slide-up">
+      <div class="section-title">
+        <h2>Memo Board</h2>
+        <p>방명록이나 남기고 싶은 메모를 자유롭게 적어보세요.</p>
+      </div>
+      <div class="guestbook-container glass-panel">
+        <form id="memo-form" class="memo-form">
+          <input type="text" id="memo-author" placeholder="닉네임 (Name)" required />
+          <textarea id="memo-content" placeholder="메모를 남겨주세요... (Message)" required></textarea>
+          <button type="submit" class="btn primary">Leave a Memo</button>
+        </form>
+        <div class="memos-list" id="memos-list">
+          <!-- Memos will go here via JS -->
+        </div>
+      </div>
+    </section>
+
     <!-- GitHub Section -->
     <section id="github" class="github scale-in">
       <div class="github-container glass-panel">
@@ -113,5 +212,19 @@
   </footer>
 
   <script src="./main.js"></script>
+
+  <!-- Skill Modal -->
+  <div id="skill-modal" class="modal-overlay">
+    <div class="modal-content glass-panel">
+      <button class="close-modal" aria-label="Close modal">&times;</button>
+      <div class="modal-header">
+        <div class="modal-icon" id="modal-icon"></div>
+        <h2 id="modal-title">Skill Details</h2>
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Records will be injected here -->
+      </div>
+    </div>
+  </div>
 </body>
 </html>
