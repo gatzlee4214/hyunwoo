@@ -75,16 +75,23 @@ document.addEventListener('DOMContentLoaded', () => {
     displayData.forEach(record => {
       const card = document.createElement('article');
       card.className = 'record-card glass-panel interactive';
+      
+      // Link each card to the corresponding physical HTML page
+      const postFileName = `post_${String(record.id).padStart(2, '0')}.html`;
+      
       card.innerHTML = `
-        <div class="card-date">${record.date}</div>
-        <h3 class="card-title">${record.title}</h3>
-        <p class="card-excerpt">${record.excerpt}</p>
-        <div class="tags">
-          ${record.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-        </div>
+        <a href="posts/${postFileName}" target="_blank" style="text-decoration: none; color: inherit; display: block;">
+          <div class="card-date">${record.date}</div>
+          <h3 class="card-title">${record.title}</h3>
+          <p class="card-excerpt">${record.excerpt}</p>
+          <div class="tags">
+            ${record.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+          </div>
+        </a>
       `;
-      // Modal view trigger
-      card.addEventListener('click', () => openFullRecordModal(record));
+      // We keep the modal trigger as a fallback or secondary action if needed
+      // card.addEventListener('click', () => openFullRecordModal(record)); 
+      // Link handles it now.
       container.appendChild(card);
     });
   }
