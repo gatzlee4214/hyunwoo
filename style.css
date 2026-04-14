@@ -7,6 +7,7 @@
   --color-text-muted: #8b9bb4;
   --color-cyan: #00f2ff;
   --color-magenta: #ff00ff;
+  --color-primary: #00f2ff; /* Defining primary color */
   --color-white: #ffffff;
   
   --neon-cyan-glow: 0 0 10px rgba(0, 242, 255, 0.8), 0 0 20px rgba(0, 242, 255, 0.4);
@@ -298,6 +299,73 @@ section {
   border-color: var(--color-cyan);
   box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.5);
   background: rgba(0, 242, 255, 0.05);
+}
+
+/* --- Search & Filter Console --- */
+.search-console {
+  max-width: 800px;
+  margin: 0 auto 3rem auto;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.search-box {
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 1.2rem;
+  color: var(--color-cyan);
+}
+
+#record-search {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1.5px solid rgba(0, 242, 255, 0.3);
+  border-radius: 50px;
+  padding: 1rem 1rem 1rem 3rem;
+  color: #fff;
+  font-family: var(--font-main);
+  outline: none;
+  transition: var(--transition);
+}
+
+#record-search:focus {
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+}
+
+.tag-filters {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tag-filter {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-text-muted);
+  padding: 8px 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.tag-filter:hover, .tag-filter.active {
+  background: rgba(0, 242, 255, 0.15);
+  border-color: var(--color-cyan);
+  color: var(--color-cyan);
+  box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
 }
 
 /* Glowing Border Effect */
@@ -809,4 +877,223 @@ footer p {
   color: var(--color-text-muted);
   font-size: 0.95rem;
   line-height: 1.6;
+}
+
+/* =========================================
+   Fun Additions: Scroll Bar, Terminal, Cursor
+   ========================================= */
+
+/* -- Scroll Progress Bar -- */
+.scroll-progress-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: transparent;
+  z-index: 2000;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-cyan), var(--color-magenta));
+  width: 0%;
+  box-shadow: 0 0 10px var(--color-cyan);
+  transition: width 0.1s ease;
+}
+
+/* -- Cursor Canvas -- */
+#cursor-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 3000;
+  pointer-events: none; /* Let clicks pass through */
+}
+
+/* -- Secret Terminal -- */
+#terminal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.terminal-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: scale(0.9) translateY(20px);
+}
+
+.terminal-window {
+  width: 90%;
+  max-width: 800px;
+  height: 500px;
+  background: rgba(10, 15, 30, 0.95);
+  border: 1px solid var(--color-cyan);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 242, 255, 0.2);
+}
+
+.terminal-header {
+  padding: 10px 15px;
+  background: rgba(0, 242, 255, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+}
+
+.terminal-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.red { background: #ff5f56; }
+.yellow { background: #ffbd2e; }
+.green { background: #27c93f; }
+
+.terminal-title {
+  color: var(--color-cyan);
+  font-family: var(--font-code);
+  font-size: 0.8rem;
+  margin-left: 10px;
+  letter-spacing: 1px;
+}
+
+.terminal-body {
+  flex-grow: 1;
+  padding: 20px;
+  font-family: var(--font-code);
+  font-size: 0.95rem;
+  color: #00ffca;
+  overflow-y: auto;
+  line-height: 1.5;
+}
+
+.terminal-line { margin-bottom: 8px; }
+.prompt { color: var(--color-magenta); margin-right: 10px; }
+
+.terminal-input-row {
+  padding: 15px 20px;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+}
+
+#terminal-input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-family: var(--font-code);
+  font-size: 1rem;
+}
+
+/* -- Glitch & Effects -- */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-text:hover::before {
+  left: 2px;
+  text-shadow: -2px 0 var(--color-cyan);
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim 5s infinite linear alternate-reverse;
+}
+
+.glitch-text:hover::after {
+  left: -2px;
+  text-shadow: -2px 0 var(--color-magenta);
+  clip: rect(44px, 450px, 56px, 0);
+  animation: glitch-anim2 5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim {
+  0% { clip: rect(31px, 9999px, 94px, 0); }
+  20% { clip: rect(62px, 9999px, 42px, 0); }
+  40% { clip: rect(16px, 9999px, 78px, 0); }
+  60% { clip: rect(98px, 9999px, 13px, 0); }
+  80% { clip: rect(43px, 9999px, 55px, 0); }
+  100% { clip: rect(56px, 9999px, 89px, 0); }
+}
+
+@keyframes glitch-anim2 {
+  0% { clip: rect(65px, 9999px, 100px, 0); }
+  20% { clip: rect(12px, 9999px, 58px, 0); }
+  40% { clip: rect(82px, 9999px, 22px, 0); }
+  60% { clip: rect(45px, 9999px, 92px, 0); }
+  80% { clip: rect(10px, 9999px, 64px, 0); }
+  100% { clip: rect(50px, 9999px, 15px, 0); }
+}
+
+/* Pulse animation for small interactions */
+@keyframes neon-pulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(0, 242, 255, 0.4); }
+  50% { box-shadow: 0 0 20px rgba(0, 242, 255, 0.8); }
+}
+
+.pulse {
+  animation: neon-pulse 2s infinite;
+}
+
+/* Pagination Styles */
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 3rem;
+}
+
+.pagination-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 242, 255, 0.3);
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-code);
+  transition: all 0.3s ease;
+}
+
+.pagination-btn:hover {
+  background: rgba(0, 242, 255, 0.2);
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 10px var(--color-cyan);
+}
+
+.pagination-btn.active {
+  background: var(--color-cyan);
+  color: #000;
+  font-weight: bold;
+  box-shadow: 0 0 15px var(--color-cyan);
 }

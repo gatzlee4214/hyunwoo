@@ -16,11 +16,17 @@
 <body>
   <!-- Galaxy Space Theme Background -->
   <canvas id="space-canvas"></canvas>
+  <canvas id="cursor-canvas"></canvas>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress-container">
+    <div class="scroll-progress-bar" id="scroll-bar"></div>
+  </div>
 
   <!-- Header Navigation -->
   <header class="glass-header">
     <nav>
-      <div class="logo">HYUNWOO.DEV<span>_</span></div>
+      <div class="logo glitch-text" data-text="HYUNWOO.DEV">HYUNWOO.DEV<span>_</span></div>
       <ul class="nav-links">
         <li><a href="#about" class="active">About</a></li>
         <li><a href="#skills">Skills</a></li>
@@ -38,7 +44,7 @@
     <section id="about" class="hero fade-in">
       <div class="hero-content">
         <span class="neon-label">&lt;NEON_PROTOCOL_INIT /&gt;</span>
-        <h1 class="glow-text">공학3계열 컴퓨터소프트웨어</h1>
+        <h1 class="glow-text glitch-text" data-text="공학3계열 컴퓨터소프트웨어">공학3계열 컴퓨터소프트웨어</h1>
         <h2>이현우의 개발 블로그</h2>
         <p class="description">
           기초부터 탄탄하게! 배운 것을 기록하고, 코드로 세상을 바꾸기 위한 첫 걸음을 내딛는 중입니다.
@@ -77,9 +83,38 @@
         <h2>Study Records</h2>
         <p>개발 학습 기록 및 메모</p>
       </div>
+
+      <!-- Search & Filter Console -->
+      <div class="search-console glass-panel">
+        <div class="search-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="record-search" placeholder="검색어를 입력하세요 (제목, 내용)...">
+        </div>
+        <div class="tag-filters" id="tag-filters">
+          <button class="tag-filter active" data-tag="all">All</button>
+          <button class="tag-filter" data-tag="C">C</button>
+          <button class="tag-filter" data-tag="Linux">Linux</button>
+          <button class="tag-filter" data-tag="Web">Web</button>
+          <button class="tag-filter" data-tag="CS">CS</button>
+        </div>
+      </div>
       
       <div class="cards-container" id="study-records-container">
         <!-- Records will be injected by main.js -->
+      </div>
+      
+      <!-- Pagination Controls -->
+      <div id="pagination-controls" class="pagination-container"></div>
+    </section>
+
+    <!-- Daily Protocol Section -->
+    <section id="daily" class="daily slide-up">
+      <div class="section-title">
+        <h2>DAILY PROTOCOL</h2>
+        <p>일상, 취미, 그리고 소소한 생각들</p>
+      </div>
+      <div class="cards-container" id="daily-records-container">
+        <!-- Daily records will be injected here -->
       </div>
     </section>
 
@@ -158,7 +193,26 @@
 
   <script src="./main.js"></script>
 
-  <!-- Skill Modal -->
+  <!-- Secret Terminal -->
+  <div id="terminal-container" class="terminal-hidden">
+    <div class="terminal-window glass-panel">
+      <div class="terminal-header">
+        <span class="terminal-dot red"></span>
+        <span class="terminal-dot yellow"></span>
+        <span class="terminal-dot green"></span>
+        <span class="terminal-title">HYUNWOO_OS_v1.0.42_CORE</span>
+      </div>
+      <div class="terminal-body" id="terminal-output">
+        <div class="terminal-line"><span class="prompt">></span> Welcome to HYUNWOO.DEV Terminal.</div>
+        <div class="terminal-line"><span class="prompt">></span> Type 'help' to see available commands.</div>
+      </div>
+      <div class="terminal-input-row">
+        <span class="prompt">></span>
+        <input type="text" id="terminal-input" autofocus spellcheck="false" autocomplete="off">
+      </div>
+    </div>
+  </div>
+
   <div id="skill-modal" class="modal-overlay">
     <div class="modal-content glass-panel">
       <button class="close-modal" aria-label="Close modal">&times;</button>
