@@ -1,4 +1,46 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // --- Generate 50 Study Records ---
+  const studyRecordsData = [];
+  const topics = [
+    { tag: "C", titles: ["이해해보기", "기초 문법", "포인터의 마법", "메모리 구조", "동적 할당 활용", "구조체 이해", "파일 입출력 실습"] },
+    { tag: "Linux", titles: ["커널의 구조", "쉘 커맨드 정복", "프로세스 관리", "권한 설정(chmod)", "서버 구축 기초", "Vim 사용법", "패키지 매니저"] },
+    { tag: "Web", titles: ["HTML5 시맨틱 태그", "CSS3 플렉스박스", "그리드 레이아웃", "자바스크립트 DOM 조작", "이벨트 루프의 이해", "비동기 프로그래밍", "반응형 디자인"] },
+    { tag: "CS", titles: ["자료구조 기초", "알고리즘 복잡도", "정렬 알고리즘", "네트워크 OSI 7계층", "운영체제 스케줄링", "데이터베이스 기초", "컴퓨터 구조"] }
+  ];
+
+  const startDate = new Date(2026, 2, 1);
+  for (let i = 1; i <= 50; i++) {
+    const topic = topics[Math.floor(Math.random() * topics.length)];
+    const titleSuffix = topic.titles[Math.floor(Math.random() * topic.titles.length)];
+    const date = new Date(startDate);
+    date.setDate(startDate.getDate() + (i * 2));
+    const dateStr = `${date.getFullYear()}. ${String(date.getMonth() + 1).padStart(2, '0')}. ${String(date.getDate()).padStart(2, '0')}`;
+    
+    studyRecordsData.push({
+      date: dateStr,
+      title: `[Day ${String(i).padStart(2, '0')}] ${topic.tag}: ${titleSuffix}`,
+      excerpt: `${topic.tag} 분야의 ${titleSuffix}에 대해 학습했습니다. 기초 개념부터 실제 코드 적용 사례까지 정리해보았습니다.`,
+      tags: [topic.tag, "Study"]
+    });
+  }
+
+  // --- Render Study Records ---
+  const recordsContainer = document.getElementById('study-records-container');
+  if (recordsContainer) {
+    studyRecordsData.slice().reverse().forEach(record => {
+      const card = document.createElement('article');
+      card.className = 'record-card glass-panel interactive';
+      card.innerHTML = `
+        <div class="card-date">${record.date}</div>
+        <h3 class="card-title">${record.title}</h3>
+        <p class="card-excerpt">${record.excerpt}</p>
+        <div class="tags">
+          ${record.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+        </div>
+      `;
+      recordsContainer.appendChild(card);
+    });
+  }
   // 1. Navigation & Scroll Logic
   const navLinks = document.querySelectorAll('.nav-links a');
   const sections = document.querySelectorAll('section');
@@ -247,43 +289,18 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     linux: {
       icon: '🐧',
-      title: 'Linux',
+      title: 'Linux Kernel',
       records: [
-        { date: '2026. 03. 28', title: '기본 쉘 명령어', desc: 'cd, ls, grep, pwd 등 쉘 조작 기초 명령어 학습.' },
-        { date: '2026. 03. 15', title: '권한 관리', desc: 'chmod, chown을 활용한 리눅스 파일 시스템 권한 체계 이해.' }
+        { date: '2026. 03. 28', title: '커널 컴파일 기초', desc: '리눅스 커널 소스 다운로드 및 기본 빌드 과정 학습.' },
+        { date: '2026. 03. 15', title: '시스템 콜 이해', desc: '유저 모드와 커널 모드 사이의 인터페이스인 시스템 콜 동작 방식 파악.' }
       ]
     },
-    html: {
+    web: {
       icon: '🌐',
-      title: 'HTML / CSS',
+      title: 'Web Architect',
       records: [
-        { date: '2026. 03. 20', title: '글래스모피즘(Glassmorphism) 구현', desc: 'backdrop-filter: blur()와 rgba 배경을 조합한 유리 질감 UI 제작.' },
-        { date: '2026. 03. 10', title: '시맨틱 웹과 접근성', desc: 'header, main, section 태그의 올바른 사용과 폼 요소 접근성 개선.' }
-      ]
-    },
-    js: {
-      icon: 'JS',
-      title: 'JavaScript',
-      records: [
-        { date: '2026. 03. 30', title: 'Canvas API 기초', desc: 'HTML5 <canvas>를 활용한 우주 파티클 애니메이션 및 마우스 상호작용 구현.' },
-        { date: '2026. 03. 22', title: 'Intersection Observer', desc: '스크롤 위치에 따른 네비게이션 액티브 상태 동적 변경 및 요소 페이드인 적용.' }
-      ]
-    },
-    git: {
-      icon: '⌨️',
-      title: 'Git / GitHub',
-      records: [
-        { date: '2026. 03. 31', title: 'Vercel 연동 배포', desc: 'GitHub 저장소와 Vercel을 연동하여 정적 호스팅 환경 구축.' },
-        { date: '2026. 03. 05', title: '브랜치 전략', desc: 'feature 브랜치 생성 및 병합, 충돌(Conflict) 해결 방법 실습.' }
-      ]
-    },
-    more: {
-      icon: '🚀',
-      title: 'Future Roadmap',
-      records: [
-        { date: '예정', title: 'Data Structures & Algorithms', desc: '자료구조(스택, 큐, 트리, 그래프) 및 기본 알고리즘 학습 계획.' },
-        { date: '예정', title: 'React / Next.js', desc: '모던 프론트엔드 프레임워크를 활용한 컴포넌트 기반 UI 개발.' },
-        { date: '예정', title: 'Backend / DB', desc: 'Node.js 또는 Java를 이용한 서버 구축 및 데이터베이스 연동.' }
+        { date: '2026. 03. 20', title: '프론트엔드 아키텍처', desc: '컴포넌트 설계 원칙과 상태 관리 기법에 대한 연구.' },
+        { date: '2026. 03. 10', title: '백엔드 시스템 설계', desc: 'RESTful API 설계와 데이터베이스 정규화 전략 학습.' }
       ]
     }
   };

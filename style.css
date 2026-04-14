@@ -2,24 +2,20 @@
    CSS Reset & Variables (Galaxy Theme)
 ========================================= */
 :root {
-  --color-bg: #030017;           /* Deep nearly black indigo */
-  --color-text: #e2e8f0;         /* Soft white text */
-  --color-text-muted: #8b9bb4;   /* Cool muted text for the cosmos */
-  --color-primary: #00d2ff;      /* Cyan star color */
-  --color-primary-hover: #00a4d6;
-  --color-secondary: rgba(255, 255, 255, 0.05);
-  --color-secondary-hover: rgba(255, 255, 255, 0.1);
+  --color-bg: #000000;           /* Pure black for neon contrast */
+  --color-text: #ffffff;
+  --color-text-muted: #8b9bb4;
+  --color-cyan: #00f2ff;
+  --color-magenta: #ff00ff;
   --color-white: #ffffff;
   
-  --glass-bg: rgba(5, 10, 30, 0.45);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
-  --glow-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+  --neon-cyan-glow: 0 0 10px rgba(0, 242, 255, 0.8), 0 0 20px rgba(0, 242, 255, 0.4);
+  --neon-magenta-glow: 0 0 10px rgba(255, 0, 255, 0.8), 0 0 20px rgba(255, 0, 255, 0.4);
   
   --font-main: 'Inter', sans-serif;
   --font-code: 'Fira Code', monospace;
   
-  --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --transition: all 0.3s ease;
 }
 
 * {
@@ -59,12 +55,22 @@ body {
    Reusable Glassmorphism Panel
 ========================================= */
 .glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
-  box-shadow: var(--glass-shadow);
-  border-radius: 20px;
+  background: rgba(0, 242, 255, 0.03);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 242, 255, 0.3);
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
+  border-radius: 15px;
+}
+
+.neon-box-cyan {
+  border: 1.5px solid var(--color-cyan);
+  box-shadow: inset 0 0 10px rgba(0, 242, 255, 0.2), 0 0 15px rgba(0, 242, 255, 0.2);
+}
+
+.neon-box-magenta {
+  border: 1.5px solid var(--color-magenta);
+  box-shadow: inset 0 0 10px rgba(255, 0, 255, 0.2), 0 0 15px rgba(255, 0, 255, 0.2);
 }
 
 /* =========================================
@@ -78,55 +84,38 @@ h1, h2, h3 {
 
 .btn {
   display: inline-block;
-  padding: 12px 28px;
-  border-radius: 8px;
+  padding: 12px 32px;
+  border-radius: 4px;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  font-family: var(--font-code);
   transition: all 0.3s ease;
   cursor: pointer;
-  border: none;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.btn.primary {
+.btn.cyan {
+  color: var(--color-cyan);
+  border: 1.5px solid var(--color-cyan);
   background: transparent;
-  color: var(--color-primary);
-  border: 2px solid var(--color-primary);
-  box-shadow: var(--glow-shadow);
 }
 
-.btn.primary::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: var(--color-primary);
-  z-index: -1;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s ease;
+.btn.cyan:hover {
+  background: rgba(0, 242, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
 }
 
-.btn.primary:hover {
-  color: #030017;
+.btn.magenta {
+  color: var(--color-magenta);
+  border: 1.5px solid var(--color-magenta);
+  background: transparent;
 }
 
-.btn.primary:hover::before {
-  transform: scaleX(1);
-}
-
-.btn.secondary {
-  background-color: var(--color-secondary);
-  color: var(--color-white);
-  border: 1px solid var(--glass-border);
-}
-
-.btn.secondary:hover {
-  background-color: var(--color-secondary-hover);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
+.btn.magenta:hover {
+  background: rgba(255, 0, 255, 0.1);
+  box-shadow: 0 0 20px rgba(255, 0, 255, 0.4);
 }
 
 /* =========================================
@@ -209,49 +198,43 @@ section {
 
 /* --- Hero Section --- */
 .hero-content {
-  padding: 5rem 4rem;
+  padding: 6rem 3rem;
   text-align: center;
   position: relative;
-  overflow: hidden;
-  border-top: 1px solid rgba(0, 210, 255, 0.3);
-  background: linear-gradient(180deg, rgba(0,210,255,0.03) 0%, rgba(5,10,30,0.6) 100%);
+  border: 1.5px solid var(--color-cyan);
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.05) 0%, rgba(255, 0, 255, 0.05) 100%);
+  box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
 }
 
-.greeting {
+.neon-label {
   font-family: var(--font-code);
-  color: var(--color-primary);
-  font-size: 1.2rem;
+  color: var(--color-magenta);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+.hero h1 {
+  font-size: 4rem;
   margin-bottom: 1.5rem;
-  text-shadow: 0 0 8px rgba(0, 210, 255, 0.5);
-}
-
-.glitch {
-  font-size: 3.5rem;
-  margin-bottom: 1rem;
-  background: linear-gradient(to right, #ffffff, #00d2ff, #7a00ff);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: textShimmer 3s infinite linear;
-  background-size: 200% auto;
-}
-
-@keyframes textShimmer {
-  to { background-position: 200% center; }
+  color: #ffffff;
+  text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px var(--color-cyan);
 }
 
 .hero h2 {
-  font-size: 2rem;
-  color: #aebacd;
-  margin-bottom: 2rem;
-  font-weight: 600;
+  font-size: 1.8rem;
+  color: var(--color-cyan);
+  margin-bottom: 2.5rem;
+  font-weight: 700;
 }
 
 .description {
-  font-size: 1.1rem;
-  max-width: 700px;
+  font-size: 1rem;
+  max-width: 600px;
   margin: 0 auto 3rem auto;
-  color: var(--color-text-muted);
+  color: #aebacd;
+  line-height: 1.8;
 }
 
 .cta-buttons {
@@ -267,27 +250,32 @@ section {
 }
 
 .section-title h2 {
-  font-family: var(--font-code);
-  font-size: 2.5rem;
+  font-family: var(--font-main);
+  font-size: 3rem;
   color: var(--color-white);
-  text-shadow: 0 0 15px rgba(255,255,255,0.2);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1rem;
+  text-shadow: var(--neon-magenta-glow);
 }
 
-.section-title h2::before {
-  content: '{ ';
-  color: var(--color-primary);
-  text-shadow: 0 0 10px var(--color-primary);
-}
 .section-title h2::after {
-  content: ' }';
-  color: var(--color-primary);
-  text-shadow: 0 0 10px var(--color-primary);
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--color-magenta);
+  box-shadow: var(--neon-magenta-glow);
 }
 
 .section-title p {
   color: var(--color-text-muted);
-  margin-top: 1rem;
-  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  font-size: 1rem;
 }
 
 .cards-container {
@@ -297,12 +285,19 @@ section {
 }
 
 .record-card {
-  padding: 2.5rem 2rem;
+  padding: 2rem;
   transition: var(--transition);
   position: relative;
-  overflow: hidden;
-  background: linear-gradient(135deg, rgba(20,25,50,0.6) 0%, rgba(5,10,30,0.8) 100%);
-  border: 1px solid rgba(255,255,255,0.05);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+}
+
+.record-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--color-cyan);
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.5);
+  background: rgba(0, 242, 255, 0.05);
 }
 
 /* Glowing Border Effect */
@@ -376,57 +371,38 @@ section {
 }
 
 .skill-card {
-  padding: 2rem;
+  padding: 3rem 2rem;
   text-align: center;
   transition: var(--transition);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  background: linear-gradient(135deg, rgba(20,25,50,0.6) 0%, rgba(5,10,30,0.8) 100%);
+  border: 1px solid rgba(0, 242, 255, 0.2);
+  background: linear-gradient(135deg, rgba(0, 242, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
   position: relative;
   overflow: hidden;
   cursor: pointer;
-}
-
-.skill-card::before {
-  content: '';
-  position: absolute;
-  top: -50%; left: -50%; width: 200%; height: 200%;
-  background: radial-gradient(circle, rgba(0, 210, 255, 0.1) 0%, transparent 50%);
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  z-index: 0;
+  border-radius: 12px;
 }
 
 .skill-card:hover {
-  transform: translateY(-8px);
-  border-color: rgba(0, 210, 255, 0.4);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 210, 255, 0.2);
-}
-
-.skill-card:hover::before {
-  opacity: 1;
+  transform: translateY(-10px);
+  border-color: var(--color-cyan);
+  box-shadow: 0 0 30px rgba(0, 242, 255, 0.3);
 }
 
 .skill-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: var(--color-primary);
-  text-shadow: 0 0 10px rgba(0, 210, 255, 0.6);
+  font-size: 3.5rem;
+  margin-bottom: 2rem;
+  color: var(--color-cyan);
+  text-shadow: 0 0 15px var(--color-cyan);
   position: relative;
   z-index: 1;
 }
 
 .skill-card h3 {
-  font-size: 1.3rem;
-  margin-bottom: 0.8rem;
-  position: relative;
-  z-index: 1;
-}
-
-.skill-card p {
-  font-size: 0.9rem;
-  color: var(--color-text-muted);
-  position: relative;
-  z-index: 1;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 /* --- Toy Projects Section --- */
