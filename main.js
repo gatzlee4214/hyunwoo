@@ -469,6 +469,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function closeSkillModal() {
+    if (skillModal) {
+      skillModal.classList.remove('show');
+      document.body.style.overflow = '';
+      playSound(330, 'sine', 0.05);
+    }
+    // Also close terminal if open
+    if (terminalContainer && !terminalContainer.classList.contains('terminal-hidden')) {
+      terminalContainer.classList.add('terminal-hidden');
+    }
+  }
+
   if (closeModalBtn) {
     closeModalBtn.addEventListener('click', closeSkillModal);
   }
@@ -480,8 +492,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && skillModal && skillModal.classList.contains('show')) {
-      closeSkillModal();
+    // Close with Escape OR X
+    if ((e.key === 'Escape' || e.key.toLowerCase() === 'x')) {
+      if ((skillModal && skillModal.classList.contains('show')) || 
+          (terminalContainer && !terminalContainer.classList.contains('terminal-hidden'))) {
+        closeSkillModal();
+      }
     }
   });
 
@@ -774,4 +790,91 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   injectExportButton();
+
+  // 13. Konami Code Easter Egg (Up Up Down Down Left Right Left Right B A)
+  const konamiPattern = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+  let konamiIndex = 0;
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === konamiPattern[konamiIndex]) {
+      konamiIndex++;
+      if (konamiIndex === konamiPattern.length) {
+        startHackerMode();
+        konamiIndex = 0;
+      }
+    } else {
+      konamiIndex = 0;
+    }
+  });
+
+  function startHackerMode() {
+    playSound(110, 'sawtooth', 1);
+    document.body.classList.add('hacker-active');
+    appendLine('[SYSTEM] HACKER MODE ACTIVATED.', 'success-line');
+    
+    // Trigger matrix-like background or similar glitchey effect
+    const glitchOverlay = document.createElement('div');
+    glitchOverlay.className = 'glitch-overlay';
+    document.body.appendChild(glitchOverlay);
+    
+    setTimeout(() => {
+      glitchOverlay.remove();
+      document.body.classList.remove('hacker-active');
+    }, 5000);
+  }
+
+  // 14. Simple Audio/Music Control (Visual only placeholder)
+  function setupMusicPlayer() {
+    const musicWidget = document.createElement('div');
+    musicWidget.className = 'music-widget glass-panel interactive';
+    musicWidget.innerHTML = `
+      <div class="music-info">
+        <span class="music-icon">🎵</span>
+        <span class="track-name">Night City (Synthwave)</span>
+      </div>
+      <div class="music-controls">
+        <button id="music-play" class="music-btn">▶</button>
+      </div>
+    `;
+    document.body.appendChild(musicWidget);
+
+    let isPlaying = false;
+    const playBtn = musicWidget.querySelector('#music-play');
+    playBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      isPlaying = !isPlaying;
+      playBtn.textContent = isPlaying ? '⏸' : '▶';
+      if (isPlaying) {
+        // Just play a continuous low tone for "vibe" as we can't load real mp3 easily
+        startAmbientDrone();
+      } else {
+        stopAmbientDrone();
+      }
+    });
+  }
+
+  let ambientOsc = null;
+  let ambientGain = null;
+
+  function startAmbientDrone() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    ambientOsc = audioCtx.createOscillator();
+    ambientGain = audioCtx.createGain();
+    ambientOsc.type = 'triangle';
+    ambientOsc.frequency.setValueAtTime(55, audioCtx.currentTime); // Low bass
+    ambientGain.gain.setValueAtTime(0, audioCtx.currentTime);
+    ambientGain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 1);
+    ambientOsc.connect(ambientGain);
+    ambientGain.connect(audioCtx.destination);
+    ambientOsc.start();
+  }
+
+  function stopAmbientDrone() {
+    if (ambientGain) {
+      ambientGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1);
+      setTimeout(() => ambientOsc && ambientOsc.stop(), 1000);
+    }
+  }
+
+  setupMusicPlayer();
 });

@@ -1097,3 +1097,80 @@ footer p {
   font-weight: bold;
   box-shadow: 0 0 15px var(--color-cyan);
 }
+
+/* Music Widget */
+.music-widget {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 5000;
+  border: 1px solid var(--color-magenta);
+  box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
+}
+
+.music-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: var(--color-white);
+  font-family: var(--font-code);
+}
+
+.music-btn {
+  background: transparent;
+  border: 1px solid var(--color-magenta);
+  color: var(--color-magenta);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.music-btn:hover {
+  background: rgba(255, 0, 255, 0.1);
+  box-shadow: 0 0 10px var(--color-magenta);
+}
+
+/* Hacker Mode Glitch Overlay */
+.glitch-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 255, 0, 0.05);
+  pointer-events: none;
+  z-index: 9999;
+  animation: hacker-glitch 0.2s infinite;
+}
+
+@keyframes hacker-glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-5px, 5px); }
+  40% { transform: translate(-5px, -5px); }
+  60% { transform: translate(5px, 5px); }
+  80% { transform: translate(5px, -5px); }
+  100% { transform: translate(0); }
+}
+
+.hacker-active {
+  filter: sepia(1) hue-rotate(90deg) brightness(1.2);
+}
+
+/* Mobile Adjustments for new widgets */
+@media (max-width: 768px) {
+  .music-widget {
+    bottom: 20px;
+    right: 20px;
+    padding: 8px 12px;
+  }
+}
